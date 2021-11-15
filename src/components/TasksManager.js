@@ -21,6 +21,7 @@ class TasksManager extends React.Component {
 
   render() {
     const { taskName } = this.state;
+    console.log(this.state);
 
     return (
       <>
@@ -30,8 +31,7 @@ class TasksManager extends React.Component {
           <input name="name" value={taskName} onChange={this.changeHandler} />
           <input type="submit" />
         </form>
-
-        <main></main>
+        <main>{this.renderTasksList()}</main>
       </>
     );
   }
@@ -41,26 +41,34 @@ class TasksManager extends React.Component {
 
     const { taskName } = this.state;
 
-    const data = {
-      name: taskName,
-    };
+    if (taskName.trim() !== "") {
+      const data = {
+        name: taskName,
+        time: 0,
+        isRunning: false,
+        isDone: false,
+        isRemoved: false,
+      };
 
-    const options = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    };
+      const options = {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      };
 
-    fetch(this.url, options)
-      .then((resp) => console.log(resp))
-      .catch((err) => console.error(err))
-      .finally(() => {
-        this.setState({
-          taskName: "",
+      fetch(this.url, options)
+        .then((resp) => console.log(resp))
+        .catch((err) => console.error(err))
+        .finally(() => {
+          this.setState({
+            taskName: "",
+          });
+
+          this.loadTasksToState();
         });
-
-        this.loadTasksToState();
-      });
+    } else {
+      alert("Enter task name");
+    }
   };
 
   changeHandler = (e) => {
@@ -78,6 +86,34 @@ class TasksManager extends React.Component {
           tasks: [...data],
         });
       });
+  };
+
+  renderTasksList() {
+    const tasksList = this.state.tasks;
+    const taskListElement = tasksList.map((task) => {
+      return (
+        <section className="task">
+          <header className="task__header">
+            {task.name} {task.time}
+          </header>
+          <footer className="task__footer">
+            <button onClick={this.toggleStartStop} className="task__startstop">
+              start/stop
+            </button>
+            <button className="task__finished">finished</button>
+            <button className="task__delete" disabled="true">
+              delete
+            </button>
+          </footer>
+        </section>
+      );
+    });
+
+    return taskListElement;
+  }
+
+  toggleStartStop = (e) => {
+    console.log(e.currentTarget.parentElement);
   };
 }
 

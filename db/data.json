@@ -1,32 +1,20 @@
 {
   "data": [
     {
-      "name": "test",
+      "name": " example",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
       "id": 1
     },
     {
-      "name": "clean",
+      "name": "test",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
       "id": 2
-    },
-    {
-      "name": "code task 1",
-      "id": 3
-    },
-    {
-      "name": "code task 2",
-      "id": 4
-    },
-    {
-      "name": "cleaning",
-      "id": 5
-    },
-    {
-      "name": "gym",
-      "id": 6
-    },
-    {
-      "name": "task4",
-      "id": 7
     }
   ]
 }
