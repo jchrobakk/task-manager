@@ -97,7 +97,10 @@ class TasksManager extends React.Component {
             {task.name} {task.time}
           </header>
           <footer className="task__footer">
-            <button onClick={this.toggleStartStop} className="task__startstop">
+            <button
+              onClick={() => this.toggleStartStop(task.id)}
+              className="task__startstop"
+            >
               start/stop
             </button>
             <button className="task__finished">finished</button>
@@ -112,8 +115,26 @@ class TasksManager extends React.Component {
     return taskListElement;
   }
 
-  toggleStartStop = (e) => {
-    console.log(e.currentTarget.parentElement);
+  toggleStartStop = (id) => {
+    const { tasks } = this.state;
+    const task = tasks.find((task) => task.id === id);
+    const data = {
+      ...task,
+      isRunning: !task.isRunning,
+    };
+
+    const options = {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch(`${this.url}/${id}`, options)
+      .then((resp) => console.log(resp))
+      .catch((err) => console.error(err))
+      .finally(() => {
+        this.loadTasksToState();
+      });
   };
 }
 
