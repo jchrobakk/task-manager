@@ -116,11 +116,59 @@ class TasksManager extends React.Component {
   }
 
   toggleStartStop = (id) => {
+    let isAnyTaskRunning;
+    const { tasks } = this.state;
+    if (tasks.some((e) => e.isRunning === true)) {
+      isAnyTaskRunning = true;
+    } else {
+      isAnyTaskRunning = false;
+    }
+
+    if (isAnyTaskRunning) {
+      this.toggleIsRunning(id);
+      console.log("Task is running");
+      console.log(tasks);
+    } else {
+      this.toggleIsRunning(id);
+      console.log("No task is running");
+      console.log(tasks);
+    }
+  };
+
+  toggleIsRunning = (id) => {
     const { tasks } = this.state;
     const task = tasks.find((task) => task.id === id);
     const data = {
       ...task,
       isRunning: !task.isRunning,
+    };
+
+    const options = {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch(`${this.url}/${id}`, options)
+      .then((resp) => console.log(resp))
+      .catch((err) => console.error(err))
+      .finally(() => {
+        this.loadTasksToState();
+      });
+  };
+
+  startTask = (id) => {
+    setInterval(() => {
+      this.incrementTime(id);
+    }, 1000);
+  };
+
+  incrementTime = (id) => {
+    const { tasks } = this.state;
+    const task = tasks.find((task) => task.id === id);
+    const data = {
+      ...task,
+      time: task.time + 1,
     };
 
     const options = {

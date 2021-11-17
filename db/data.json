@@ -3,7 +3,7 @@
     {
       "name": " example",
       "time": 0,
-      "isRunning": false,
+      "isRunning": true,
       "isDone": false,
       "isRemoved": false,
       "id": 1
