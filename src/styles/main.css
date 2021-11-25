@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Poppins:wght@400;700&display=swap");
 
 body {
   font-family: "Poppins";
@@ -54,4 +53,19 @@ button {
 
 .task__delete:hover {
   background: #fc4141;
+}
+
+.task__startstop:disabled {
+  background: #c4c4c4;
+  cursor: not-allowed;
+}
+
+.task__finished:disabled {
+  background: #c4c4c4;
+  cursor: not-allowed;
+}
+
+.task--done {
+  color: #c4c4c4;
+  text-decoration: line-through;
 }
