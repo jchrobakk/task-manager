@@ -2,15 +2,15 @@
   "data": [
     {
       "name": " example",
-      "time": 96,
+      "time": 103,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": false,
       "id": 1
     },
     {
       "name": "test",
-      "time": 30,
+      "time": 39,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
@@ -26,9 +26,9 @@
     },
     {
       "name": "test2",
-      "time": 10,
+      "time": 17,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": false,
       "id": 4
     }

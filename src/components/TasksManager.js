@@ -99,7 +99,11 @@ class TasksManager extends React.Component {
 
   renderTasksList() {
     const tasksList = this.state.tasks;
-    const sortedTasksList = tasksList.sort((task) => task.isDone);
+    const tasksDone = tasksList.filter((item) => item.isRemoved === false);
+
+    const sortedTasksList = tasksDone.sort(
+      (a, b) => this.createNumber(a) - this.createNumber(b)
+    );
     const taskListElement = sortedTasksList.map((task) => {
       return (
         <section className={task.isDone ? "task task--done" : "task"}>
@@ -121,7 +125,11 @@ class TasksManager extends React.Component {
             >
               finished
             </button>
-            <button className="task__delete" disabled="true">
+            <button
+              className="task__delete"
+              disabled="true"
+              onClick={() => this.handleDelete(task)}
+            >
               delete
             </button>
           </footer>
@@ -200,6 +208,27 @@ class TasksManager extends React.Component {
 
     this.setState({ tasks: newTasks });
   };
+
+  handleDelete = (task) => {
+    console.log("handleDelete");
+    const newTasks = this.state.tasks.map((t) => {
+      if (t.id === task.id) {
+        const task = { ...t, isRemoved: true };
+        this.updateTaskInApi(task);
+        return task;
+      }
+
+      return t;
+    });
+
+    this.setState({ tasks: newTasks });
+  };
+
+  createNumber(item) {
+    const num = Number(`${Number(item.isDone)}.${item.id}`);
+
+    return num;
+  }
 }
 
 export default TasksManager;
