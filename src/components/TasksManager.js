@@ -127,7 +127,6 @@ class TasksManager extends React.Component {
             </button>
             <button
               className="task__delete"
-              disabled="true"
               onClick={() => this.handleDelete(task)}
             >
               delete
