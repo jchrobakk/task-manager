@@ -55,20 +55,7 @@ class TasksManager extends React.Component {
         tasks: [...this.state.tasks, data],
       });
 
-      const options = {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      };
-
-      fetch(this.url, options)
-        .then((resp) => console.log(resp))
-        .catch((err) => console.error(err))
-        .finally(() => {
-          this.setState({
-            taskName: "",
-          });
-        });
+      this.pushTaskToApi(data);
     } else {
       alert("Enter task name");
     }
@@ -91,6 +78,23 @@ class TasksManager extends React.Component {
       });
   };
 
+  pushTaskToApi(data) {
+    const options = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch(this.url, options)
+      .then((resp) => console.log(resp))
+      .catch((err) => console.error(err))
+      .finally(() => {
+        this.setState({
+          taskName: "",
+        });
+      });
+  }
+
   isButtonStartStopDisabled(task) {
     return (this.idInterval && task.isRunning === false) || task.isDone
       ? true
@@ -101,9 +105,7 @@ class TasksManager extends React.Component {
     const tasksList = this.state.tasks;
     const tasksDone = tasksList.filter((item) => item.isRemoved === false);
 
-    const sortedTasksList = tasksDone.sort(
-      (a, b) => this.createNumber(a) - this.createNumber(b)
-    );
+    const sortedTasksList = this.getSortedTasks(tasksDone);
     const taskListElement = sortedTasksList.map((task) => {
       return (
         <section className={task.isDone ? "task task--done" : "task"}>
@@ -227,6 +229,12 @@ class TasksManager extends React.Component {
     const num = Number(`${Number(item.isDone)}.${item.id}`);
 
     return num;
+  }
+
+  getSortedTasks(tasksList) {
+    return tasksList.sort(
+      (a, b) => this.createNumber(a) - this.createNumber(b)
+    );
   }
 }
 
