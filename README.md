@@ -1,4 +1,4 @@
-# Project Name
+# Task: React Components
 
 This project is another task from my mentor - [devmentor.pl](https://devmentor.pl/). The main goal of this project to master React components. My task was to create a simple task manager with the ability to add and delete tasks and count the time spent on each of them. The entire application was to be created in one React component.
 
